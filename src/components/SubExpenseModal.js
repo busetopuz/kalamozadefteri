@@ -26,7 +26,7 @@ export default function SubExpenseModal({
     <Modal show={show} onHide={handleClose}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>New Expense</Modal.Title>
+          <Modal.Title>Yeni Harcama</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3" controlId="description">

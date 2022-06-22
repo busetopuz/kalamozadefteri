@@ -23,6 +23,7 @@ export const PersonsProvider = ({ children }) => {
       return [...prevExpenses, { id: uuidV4(), description, amount, personId }]
     })
   }
+  
   function subExpense({ description, amount, personId }) {
     setDenemeler(prevDenemeler => {
       return [...prevDenemeler, { id: uuidV4(), description, amount, personId }]
@@ -36,6 +37,7 @@ export const PersonsProvider = ({ children }) => {
   function getPersonSubExpenses(personId) {
     return denemeler.filter(denemeler => denemeler.personId === personId)
   }
+  
   function addPerson({ name, max ,vergiNo,adres,tc,faxNo}) {
     setPersons(prevPersons => {
       if (prevPersons.find(person => person.name === name)) {

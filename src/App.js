@@ -18,7 +18,7 @@ function App() {
   const [viewExpensesModalPersonId, setViewExpensesModalPersonId] = useState()
   const [addExpenseModalPersonId, setAddExpenseModalPersonId] = useState()
   const [subExpenseModalPersonId, setSubExpenseModalPersonId] = useState()
-  const { persons, getPersonExpenses } = usePersons()
+  const { persons, getPersonExpenses, getPersonSubExpenses } = usePersons()
 
   function openAddExpenseModal(personId) {
     setShowAddExpenseModal(true)
@@ -29,7 +29,10 @@ function App() {
     setShowSubExpenseModal(true)
     setSubExpenseModalPersonId(personId)
   }
-
+  const { denemeler} = usePersons()
+  const amountsub = denemeler.reduce((total, expense) => total + expense.amount, 0)
+  const { expenses} = usePersons()
+  const amountadd = expenses.reduce((total, expense) => total + expense.amount, 0)
   return (
     <>
       <Container className="my-4">
@@ -57,19 +60,23 @@ function App() {
         >
           
           {persons.map(person => {
-            const amount = getPersonExpenses(person.id).reduce(
+            const amount1 = getPersonExpenses(person.id).reduce(
               (total, expense) => total + expense.amount,
               0
             )
-            
-            
+            const amount2= getPersonSubExpenses(person.id).reduce(
+              (total, expense) => total + expense.amount,
+              0
+            )
+
+
             return (
               <PersonCard
                 key={person.id}
                 name={person.name}
                 vergi={person.vergiNo}
                 faxNo={person.faxNo}
-                amount={amount}
+                amount={amount1+amount2}
                 adres={person.adres}
                 max={person.max}
                 onAddExpenseClick={() => openAddExpenseModal(person.id)}
@@ -79,7 +86,7 @@ function App() {
                 }
               />
 
-              
+
             )
           })}
           <UncategorizedPersonCard
@@ -88,8 +95,9 @@ function App() {
               setViewExpensesModalPersonId(UNCATEGORIZED_PERSON_ID)
             }
           />
-          <TotalPersonCard />
+          <TotalPersonCard/>
           <TotalNegativeCard/>
+
         </div>
       </Container>
       <AddPersonModal
